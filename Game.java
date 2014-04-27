@@ -29,7 +29,7 @@ import java.awt.Robot;
 //  said, the sudden 180 causes the tail to "whip" behind it too quickly and it "breaks"... and if it lands outside of the box a second time, it's possible 
 //  that the body segments appear seperated, and begin to, for a lack of a better word, "helicopter." You'll know it if you see it. I was going to fix this,
 //  but to be honest it's so funny I wanted to keep it. 
-public class Debugger implements GLEventListener, KeyListener, MouseListener, MouseMotionListener
+public class Game implements GLEventListener, KeyListener, MouseListener, MouseMotionListener
 {
 	// coordinate arrays
 
@@ -150,11 +150,14 @@ public class Debugger implements GLEventListener, KeyListener, MouseListener, Mo
 		} else {
 			currentPaused = 0;
 		}
+		
 		timeRunning = (((currentTime - startTime -totalPaused- currentPaused) / (1000 * 60)) % 60) + ":" + 
 				(((currentTime - startTime-totalPaused-currentPaused) / 1000) % 60);
 		gl.glRasterPos2i(x, y);
-		glut.glutBitmapString(5, "Debugging Time: " + timeRunning);
-
+		if (!endGame)
+			glut.glutBitmapString(5, "Debugging Time: " + timeRunning);
+		else
+			glut.glutBitmapString(5, "Victory!: " + timeRunning);
 
 		//Map
 		gl.glMatrixMode(GL2.GL_PROJECTION);
@@ -253,7 +256,7 @@ public class Debugger implements GLEventListener, KeyListener, MouseListener, Mo
 		Cursor noCursor = t.createCustomCursor(i, new Point(0, 0), "none"); 
 
 
-		frame = new JFrame("Debugger!");
+		frame = new JFrame("Game!");
 		frame.setCursor(noCursor);
 		GLCanvas canvas = new GLCanvas();
 		canvas.setPreferredSize(new Dimension(width,height));  // desired size, not guaranteed
@@ -265,7 +268,7 @@ public class Debugger implements GLEventListener, KeyListener, MouseListener, Mo
 		} catch (Exception error){}
 
 
-		Debugger renderer = new Debugger();
+		Game renderer = new Game();
 		canvas.addGLEventListener(renderer);
 		canvas.addKeyListener(renderer);
 		canvas.addMouseMotionListener(renderer);
@@ -473,6 +476,8 @@ public class Debugger implements GLEventListener, KeyListener, MouseListener, Mo
 	public void mouseDragged(MouseEvent e) {}
 	// MOUSE CONTROLS-- Just don't touch them. Believe me. It is irreversible hell if you do. 
 	public void mouseMoved(MouseEvent e) {
+		if (paused)
+			return;
 		// Update mouse position
 		int x=e.getX(), y = e.getY();
 		//mouse sensitivity. Do not set to 10. I know it's tempting but that will make it wonky. 

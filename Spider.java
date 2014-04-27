@@ -86,7 +86,7 @@ public class Spider
 			Float movex = new Float(tranX+spidSpeed*Math.cos(Math.toRadians(rotateY))); 
 			Float movez = new Float(tranZ-spidSpeed*Math.sin(Math.toRadians(rotateY)));	
 			//collision code. 
-			if (!Debugger.wallcollide(movex, movez)) {
+			if (!Game.wallcollide(movex, movez)) {
 				tranX = movex; tranZ = movez; 
 			} else 
 				rotateY+=180; 

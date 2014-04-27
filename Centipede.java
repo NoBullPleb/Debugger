@@ -95,7 +95,7 @@ public class Centipede
 			Float movex = new Float(body.get(i).x+(centSpeed*.9f)*Math.cos(Math.toRadians(body.get(i).rotateY))); 
 			Float movez = new Float(body.get(i).z-(centSpeed*.9f)*Math.sin(Math.toRadians(body.get(i).rotateY)));	
 			//collision code, very similar to butterfly's except only applies to head. 
-			if (!Debugger.wallcollide(movex, movez)) {
+			if (!Game.wallcollide(movex, movez)) {
 				body.get(i).x = movex; body.get(i).z = movez; 
 			} else {
 				body.get(i).rotateY+=90;

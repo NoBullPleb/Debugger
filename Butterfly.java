@@ -74,7 +74,7 @@ public class Butterfly
 			Float movez = new Float(tranZ-buttSpeed*Math.sin(Math.toRadians(rotateY)));	
 			//if you're about to collide into the wall, spin around. 
 			//if not, move forward. 
-			if (!Debugger.wallcollide(movex, movez)) {
+			if (!Game.wallcollide(movex, movez)) {
 				tranX = movex; tranZ = movez; 
 			} else 
 				rotateY+=180;
